@@ -184,6 +184,19 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
         {
             insert_into_buffer(*temp_buf, "oc");
         }
+        else if( strcmp(s->key, "adjust_width") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "aa");
+        }
+        else if( strcmp(s->key, "undo") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "u");
+        }
+        else if( strcmp(s->key, "redo") == 0 )
+        {
+            char redo = ctl('r');
+            insert_into_buffer(*temp_buf, &redo);
+        }
 
 
         // special commands

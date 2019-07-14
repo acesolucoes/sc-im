@@ -18,10 +18,13 @@ normal, insert_right:       cd              # insere na direita
 normal, previous_valid_cell:p               # volta para a celula anterior válida
 normal, next_valid_cell:    w               # avança para a proxima celula válida
 normal, paste:              Ctrl+V          # Cola o conteudo da area de transferencia
-normal, increase_column_width:  a           # Aumenta o comprimento da coluna
+normal, increase_column_width:  a1           # Aumenta o comprimento da coluna
+normal, adjust_width:           aa          # ajusta para a celula mais comprida
 normal, decrease_column_width:  _           # Diminui o comprimento da coluna
 normal, cut:                    x           # Recorta os conteudos da célula ou faixa de células selecionada
 normal, copy:               Ctrl+C          # Copia o conteudo de uma celula
+normal, undo:               u               # desfazer ultima mudança
+normal, redo:               Ctrl+R          # refazer ultima mudança
 
 normal, insert_row:             ir          # insere uma linha
 normal, insert_column:          ic          # insere uma coluna
