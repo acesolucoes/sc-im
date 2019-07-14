@@ -10,38 +10,40 @@
 # comandos no modo normal
 normal, line_0:             0               # muda para a linha 0 da coluna atual
 normal, last_valid_line:    b               # avança para a última linha válida da coluna atual
-normal, go_to_command_mode: dd               # muda para o modo comando
-normal, go_to_visual_mode:  VM               # muda para o modo visual
+normal, go_to_command_mode: dd              # muda para o modo comando
+normal, go_to_visual_mode:  VM              # muda para o modo visual
 normal, insert_center:      cc              # insere no centro
 normal, insert_left:        ce              # insere na esquerda
 normal, insert_right:       cd              # insere na direita
-#normal, previous_valid_cell:p               # volta para a celula anterior válida
+#normal, previous_valid_cell:p              # volta para a celula anterior válida
 normal, next_valid_cell:    w               # avança para a proxima celula válida
 normal, paste:              Ctrl+V          # Cola o conteudo da area de transferencia
 normal, increase_column_width:  a1          # Aumenta o comprimento da coluna
 normal, adjust_width:           aa          # ajusta para a celula mais comprida
-normal, decrease_column_width:  d-           # Diminui o comprimento da coluna
-normal, cut:                    XX           # Recorta os conteudos da célula ou faixa de células selecionada
+normal, decrease_column_width:  d-          # Diminui o comprimento da coluna
+normal, cut:                    XX          # Recorta os conteudos da célula ou faixa de células selecionada
 normal, copy:               Ctrl+C          # Copia o conteudo de uma celula
-normal, undo:               Ctrl+Z               # desfazer ultima mudança
+normal, undo:               Ctrl+Z          # desfazer ultima mudança
 normal, redo:               Ctrl+R          # refazer ultima mudança
 normal, export_xlsx:        XL              # exporta para xlsx
-#normal, edit_num:           e              # Entra no modo de edição para editar um valor numérico
-#normal, edit_text:          E              # Entra no modo de edição para editar um texto
 
 normal, insert_row:             ir          # insere uma linha
 normal, insert_column:          ic          # insere uma coluna
 normal, open_row:               or          # Abre uma linha: insere depois da linha atual
 normal, open_column:            oc          # Abre uma coluna: insere depois da coluna atual
 
-normal, delete_row:     dr           # apaga a linha atual
-normal, delete_column:  dc           # apaga a coluna atual
-normal, export_csv:       cs              # exporta para CSV
-normal, export_txt:       ct              # exporta para TXT
-normal, export_tab:       cb              # exporta para arquivo separdao por tab (TSV)
+normal, delete_row:         dr              # apaga a linha atual
+normal, delete_column:      dc              # apaga a coluna atual
+normal, export_csv:         cs              # exporta para CSV
+normal, export_txt:         ct              # exporta para TXT
+normal, export_tab:         cb              # exporta para arquivo separdao por tab (TSV)
+
+normal, yank_cell:          yy              # Copia a celula selecionada
+normal, yank_row:           yr              # Copia a linha atual
+normal, yank_column:        yc              # Copia a coluna atual
 
 # comandos especiais (modo normal)
-show_help:                  h          # mostra o arquivo de ajuda
+show_help:                  h               # mostra o arquivo de ajuda
 normal, quit:               Ctrl+F          # Sai do programa
 normal, save:               Ctrl+W          # Salva uma planilha
 normal, open:               Ctrl+O          # Abre uma planilha
@@ -49,4 +51,4 @@ normal, paste_clipboard:    VV              # Cola da área de transferencia
 normal, copy_clipboard:     CC              # Copia para a área de transferencia
 
 # comandos no modo de edição
-#edit, paste_clipboard:    VV              # Cola da área de transferencia
+#edit, paste_clipboard:     VV              # Cola da área de transferencia

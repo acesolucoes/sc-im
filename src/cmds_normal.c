@@ -207,6 +207,20 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
         {
             insert_into_buffer(*temp_buf, "dc");
         }
+        else if( strcmp(s->key, "yank_cell") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "yy");
+        }
+        else if( strcmp(s->key, "yank_row") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "yr");
+        }
+        else if( strcmp(s->key, "yank_column") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "yc");
+        }
+
+        
 
 
         // special commands
