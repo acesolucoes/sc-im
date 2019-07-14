@@ -111,6 +111,7 @@
 #define QUIT 3
 #define OPEN 4
 #define HELP 5
+#define COPY 6
 
 void ui_sc_msg(char * s, int type, ...);
 #define sc_error(x, ...)     ui_sc_msg(x, ERROR_MSG, ##__VA_ARGS__)

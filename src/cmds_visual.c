@@ -145,22 +145,18 @@ void do_visualmode(struct block * buf) {
     // we are moving (previous to a 'C-o' keypress)
     if (moving == TRUE) {
         switch (buf->value) {
-            case L'j':
             case OKEY_DOWN:
                 currow = forw_row(1)->row;
                 break;
 
-            case L'k':
             case OKEY_UP:
                 currow = back_row(1)->row;
                 break;
 
-            case L'h':
             case OKEY_LEFT:
                 curcol = back_col(1)->col;
                 break;
 
-            case L'l':
             case OKEY_RIGHT:
                 curcol = forw_col(1)->col;
                 break;

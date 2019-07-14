@@ -339,28 +339,33 @@ int main (int argc, char ** argv) {
 
         if (special_command != 0)
         {
-            if( special_command == 1)
+            if( special_command == SAVE)
             {
                 insert_into_buffer(buffer, "w! ");
             }
-            else if( special_command == 2)
+            else if( special_command == SAVE_QUIT)
             {
                 insert_into_buffer(buffer, "wq\n");
             }
-            else if( special_command == 3)
+            else if( special_command == QUIT)
             {
                 insert_into_buffer(buffer, "q!\n");
             }
-            else if( special_command == 4)
+            else if( special_command == OPEN)
             {
-                insert_into_buffer(buffer, "load ");
+                insert_into_buffer(buffer, "load! ");
             }
-            else if( special_command == 5)
+            else if( special_command == HELP)
             {
                 insert_into_buffer(buffer, "help\n");
             }
+            else if( special_command == COPY)
+            {
+                // insert_into_buffer(buffer, "yy");
+                // sc_info("copy command");
+            }
             
-            special_command = 0;
+            special_command = NO_CMD;
         }
 
         // if we are in ncurses
@@ -717,7 +722,22 @@ void sig_cont() {
 
 void sig_int() {
     if ( ! atoi((char *) get_conf_value("debug")))
-        sc_error("Got SIGINT. Press «:q<Enter>» to quit SC-IM");
+    {
+            // sc_error("Got SIGINT. Press «:q<Enter>» to quit SC-IM");
+        if(curmode == NORMAL_MODE || curmode == VISUAL_MODE )
+        {
+            // struct block* temp_buf = create_buf();
+            struct block* temp2_buf = create_buf();
+            addto_buf(temp2_buf, ctl('c'));
+            // // TODO: test
+            // int bs = handle_command(temp2_buf, &temp_buf, curmode);
+            copybuffer(temp2_buf, buffer);
+            
+
+            // erase_buf(temp_buf);
+            erase_buf(temp2_buf);
+        }
+    }
     else
         shall_quit = 2;
     return;

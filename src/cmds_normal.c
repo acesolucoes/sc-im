@@ -99,83 +99,113 @@ int has_normal_single_command_shortcut (struct block * buf, int curmode)
  * \return none
  */
 
-void do_normalmode(struct block * buf) {
-    int bs = get_bufsize(buf);
-    struct ent * e;
-
+int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
+{
     struct shortcut* s = buffer_get_shortcut(buf, curmode);
-
-    struct block* temp_buf = create_buf();
 
     if( s )
     {
         sc_info("command %s found", s->key);
         if( strcmp(s->key, "line_0") == 0 )
         {
-            insert_into_buffer(temp_buf, "^");
+            insert_into_buffer(*temp_buf, "^");
         }
         else if( strcmp(s->key, "last_valid_line") == 0 )
         {
-            insert_into_buffer(temp_buf, "#");
+            insert_into_buffer(*temp_buf, "#");
         }
         else if( strcmp(s->key, "go_to_command_mode") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
+        }
+        else if( strcmp(s->key, "go_to_visual_mode") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "v");
         }
         else if( strcmp(s->key, "insert_center") == 0 )
         {
-            insert_into_buffer(temp_buf, "\\");
+            insert_into_buffer(*temp_buf, "\\");
         }
         else if( strcmp(s->key, "insert_left") == 0 )
         {
-            insert_into_buffer(temp_buf, "<");
+            insert_into_buffer(*temp_buf, "<");
         }
         else if( strcmp(s->key, "insert_right") == 0 )
         {
-            insert_into_buffer(temp_buf, ">");
+            insert_into_buffer(*temp_buf, ">");
         }
         else if( strcmp(s->key, "previous_valid_cell") == 0 )
         {
-            insert_into_buffer(temp_buf, "b");
+            insert_into_buffer(*temp_buf, "b");
         }
         else if( strcmp(s->key, "next_valid_cell") == 0 )
         {
-            insert_into_buffer(temp_buf, "w");
+            insert_into_buffer(*temp_buf, "w");
         }
         else if( strcmp(s->key, "paste") == 0 )
         {
-            insert_into_buffer(temp_buf, "p");
+            insert_into_buffer(*temp_buf, "p");
+        }
+        else if( strcmp(s->key, "increase_column_width") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "f>");
+        }
+        else if( strcmp(s->key, "decrease_column_width") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "f<");
+        }
+        else if( strcmp(s->key, "cut") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "x");
+        }
+        else if( strcmp(s->key, "copy") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "yy");
         }
 
 
         // special commands
         else if( strcmp(s->key, "save") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
             special_command = 1;
         }
         else if( strcmp(s->key, "save_quit") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
             special_command = 2;
         }
         else if( strcmp(s->key, "quit") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
             special_command = 3;
         }
         else if( strcmp(s->key, "open") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
             special_command = 4;
         }
         else if( strcmp(s->key, "show_help") == 0 )
         {
-            insert_into_buffer(temp_buf, ":");
+            insert_into_buffer(*temp_buf, ":");
             special_command = 5;
         }
+
+        return get_bufsize(*temp_buf);
     }
-    else
+    
+    return 0;
+}
+
+void do_normalmode(struct block * buf) {
+    struct ent * e;
+
+    
+    struct block* temp_buf = create_buf();
+
+    int bs = handle_command(buf, &temp_buf, curmode);
+
+    if( bs == 0)
     {
         sc_info("no command found");
         copybuffer(buf, temp_buf);
