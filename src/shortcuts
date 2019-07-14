@@ -5,15 +5,16 @@
 # 4) Sequencias com Control tem a caixa da letra ignorada: "Ctrl+a" é igual a "Ctrl+A"
 # 5) Shift neste momento está desabilitado
 # 6) Quando o atalho e só uma letra, por ex. a, a caixa é diferente. o atalho "a" é diferente do "A"
+# 7) Caso se opte por sequencias é necessário que não haja um subprefixo como outro comando. Ex: não se pode ter comandos "a" e "ab"
 
 # comandos no modo normal
 normal, line_0:             0               # muda para a linha 0 da coluna atual
 normal, last_valid_line:    b               # avança para a última linha válida da coluna atual
 normal, go_to_command_mode: d               # muda para o modo comando
 normal, go_to_visual_mode:  v               # muda para o modo visual
-normal, insert_center:      cc               # insere no centro
-normal, insert_left:        ce               # insere na esquerda
-normal, insert_right:       cd               # insere na direita
+normal, insert_center:      cc              # insere no centro
+normal, insert_left:        ce              # insere na esquerda
+normal, insert_right:       cd              # insere na direita
 normal, previous_valid_cell:p               # volta para a celula anterior válida
 normal, next_valid_cell:    w               # avança para a proxima celula válida
 normal, paste:              Ctrl+V          # Cola o conteudo da area de transferencia
@@ -22,13 +23,13 @@ normal, decrease_column_width:  _           # Diminui o comprimento da coluna
 normal, cut:                    x           # Recorta os conteudos da célula ou faixa de células selecionada
 normal, copy:               Ctrl+C          # Copia o conteudo de uma celula
 
-normal, insert_row:             ir          # Recorta os conteudos da célula ou faixa de células selecionada
-normal, insert_column:          ic          # Copia o conteudo de uma celula
-normal, open_row:               or          # Recorta os conteudos da célula ou faixa de células selecionada
-normal, open_column:            oc          # Copia o conteudo de uma celula
+normal, insert_row:             ir          # insere uma linha
+normal, insert_column:          ic          # insere uma coluna
+normal, open_row:               or          # Abre uma linha: insere depois da linha atual
+normal, open_column:            oc          # Abre uma coluna: insere depois da coluna atual
 
 # comandos especiais (modo normal)
-show_help:                  Ctrl+b          # mostra o arquivo de ajuda
+show_help:                  h          # mostra o arquivo de ajuda
 normal, quit:               Ctrl+F          # Sai do programa
 normal, save:               Ctrl+W          # Salva uma planilha
 normal, open:               Ctrl+O          # Abre uma planilha

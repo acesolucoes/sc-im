@@ -1,7 +1,14 @@
                          Este é o arquivo de ajuda do SC-IM.
 
 Use as teclas de seta para se mover dentro da planilha
-Use the cursor keys to move around, or 'j' to go down and 'k' to go up.
+
+Os atalhos ficam no arquivo .sc-shortcuts no diretório home. 
+O arquivo contém algumas observaçoes que ajudam a entende-lo.
+
+Há a possibilidade de se usar os atalhos originas do sc-im quando este atalho não
+se encontra dentro do arquivo de atalhos. Por isso segue a ajuda original do sc-im que
+pode te ajudar em algumas situações
+
 You can also use the <ENTER> key to go one line down and <DEL> to go up.
 
 <SPACE> moves a page down, while <C-f> and <C-b> move half page down or up.
@@ -34,7 +41,6 @@ SC-IM has the following modes:
 &NORMAL MODE&
 
 Navigation commands:
-     j k l h     Move cursor down, up, right or left.
      ^           Go up to row 0 of the current column.
      #           Go down to the last valid row of the current column.  If
                  already in last valid row of the current column, then jump to
