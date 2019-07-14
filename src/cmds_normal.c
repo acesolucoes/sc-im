@@ -168,6 +168,22 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
         {
             insert_into_buffer(*temp_buf, "yy");
         }
+        else if( strcmp(s->key, "insert_row") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "ir");
+        }
+        else if( strcmp(s->key, "insert_column") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "ic");
+        }
+        else if( strcmp(s->key, "open_row") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "or");
+        }
+        else if( strcmp(s->key, "open_column") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "oc");
+        }
 
 
         // special commands
@@ -212,7 +228,6 @@ void do_normalmode(struct block * buf) {
 
     if( bs == 0)
     {
-        sc_info("no command found");
         copybuffer(buf, temp_buf);
     }
     else if( bs == -1)
