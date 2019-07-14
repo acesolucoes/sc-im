@@ -7,18 +7,18 @@
 # 6) Quando o atalho e só uma letra, por ex. a, a caixa ´e diferente. o atalho "a" é diferente do "A"
 
 # comandos no modo normal
-line_0:             a               # muda para a linha 0 da coluna atual
-last_valid_line:    b               # avança para a última linha válida da coluna atual
-go_to_command_mode: c               # muda para o modo comando
-insert_center:      i               # insere no centro
-insert_left:        e               # insere na esquerda
-insert_right:       d               # insere na direita
-previous_valid_cell:b               # volta para a celula anterior válida
-next_valid_cell:    w               # avança para a proxima celula válida
-paste:              Ctrl+V          # Cola o conteudo da area de transferencia
+normal, line_0:             a               # muda para a linha 0 da coluna atual
+normal, last_valid_line:    b               # avança para a última linha válida da coluna atual
+normal, go_to_command_mode: c               # muda para o modo comando
+normal, insert_center:      i               # insere no centro
+normal, insert_left:        e               # insere na esquerda
+normal, insert_right:       d               # insere na direita
+normal, previous_valid_cell:p               # volta para a celula anterior válida
+normal, next_valid_cell:    w               # avança para a proxima celula válida
+normal, paste:              Ctrl+V          # Cola o conteudo da area de transferencia
 
 # comandos especiais (modo normal)
-show_help:          Ctrl+b          # mostra o arquivo de ajuda
-quit:               Ctrl+F          # Sai do programa
-save:               Ctrl+W          # Salva uma planilha
-open:               Ctrl+A          # Abre uma planilha
+show_help:                  Ctrl+b          # mostra o arquivo de ajuda
+normal, quit:               Ctrl+F          # Sai do programa
+normal, save:               Ctrl+W          # Salva uma planilha
+normal, open:               Ctrl+O          # Abre uma planilha

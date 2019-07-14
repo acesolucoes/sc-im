@@ -184,6 +184,9 @@ extern int special_command;
 
 int main (int argc, char ** argv) {
 
+    // init_shortcuts();
+    // exit(0);
+
     // Define how the file stream should be buffered. Error if unsuccessful.
     if (setvbuf(stderr, stderr_buffer, _IOFBF, STDERRBUF) != 0) {
         fprintf(stderr, "Error setting stderr buffer\n");

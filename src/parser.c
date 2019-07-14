@@ -21,7 +21,7 @@ char * trim( char *beg, char *end)
     return keyword;
 }
 
-struct shortcut* create_shortcut(char *key, char *val)
+struct shortcut* create_shortcut(char *value, char *val)
 {
     struct block* buf = create_buf();
 
@@ -52,7 +52,7 @@ struct shortcut* create_shortcut(char *key, char *val)
     }
     
     struct shortcut* l = (struct shortcut*) malloc (sizeof (struct shortcut));
-    l->key = key;
+    l->key = value;
     l->values = buf;
 
     return l; 
@@ -67,8 +67,20 @@ struct shortcut_list* create_shortcut_list()
     return l;
 }
 
+struct shortcut_table* create_shortcut_table()
+{
+    struct shortcut_table* table = (struct shortcut_table*) malloc (sizeof (struct shortcut_table));
+    table->edit_mode_shortcut_list      = create_shortcut_list();
+    table->insert_mode_shortcut_list    = create_shortcut_list();
+    table->normal_mode_shortcut_list    = create_shortcut_list();
+    table->visual_mode_shortcut_list    = create_shortcut_list();
+
+    return table;
+}
+
 struct shortcut_list* add_shortcut(struct shortcut_list* l, char *key, char *val)
 {
+    printf("%s %s!\n", key, val);
     struct shortcut* shortcut = create_shortcut(key, val);
     
     if( l->shortcut == NULL )
@@ -79,6 +91,7 @@ struct shortcut_list* add_shortcut(struct shortcut_list* l, char *key, char *val
 
     struct shortcut_list *nl = create_shortcut_list();
     nl->shortcut = shortcut;
+
 
     if( strcmp(key, l->shortcut->key) <= 0 )
     {
@@ -105,9 +118,11 @@ struct shortcut_list* add_shortcut(struct shortcut_list* l, char *key, char *val
     return l;
 }
 
-struct shortcut_list *parse_shortcut_file()
+struct shortcut_table *parse_shortcut_file()
 {
-    struct shortcut_list * shortcut_list = create_shortcut_list();
+    struct shortcut_table* table = create_shortcut_table();
+
+    struct shortcut_list ** shortcut_list;
 
     // char * k, *v
     char line[257] = {}; // 0 padded array
@@ -127,7 +142,7 @@ struct shortcut_list *parse_shortcut_file()
 
     if( !shortcut_file )
     {
-        return shortcut_list;
+        return table;
     }
 
     char * comment_str, * divider_str;
@@ -145,23 +160,60 @@ struct shortcut_list *parse_shortcut_file()
 
         if( divider_str - line >= end_pos || divider_str == line ) continue; // invalid line
 
-        char *value = trim(line, divider_str-1);
-        char *key_begin =  divider_str+1;
-        char *comma_sep;
+        char *key_part = trim(line, divider_str-1);
+    
+        char *key_divider_str = strchr(key_part, ',');
+        char *key;
 
-        while( (comma_sep = strchr(key_begin, ',')) )
+        if( !key_divider_str )
         {
-            char * key = trim(key_begin, comma_sep - 1);
-            key_begin = comma_sep + 1;
-            // put(shortcut_dict, key, value);    
-            shortcut_list = add_shortcut(shortcut_list, value, key);
+            *shortcut_list = table->normal_mode_shortcut_list;
+            key  = key_part; 
+        }
+        else
+        {
+            char * destiny_shortcut_list = trim(key_part, key_divider_str-1 );
+            key = trim(key_divider_str+1, key_part + strlen(key_part) - 1);
+
+            printf("%s - %s\n", destiny_shortcut_list, key);
+
+            if( !strcmp(destiny_shortcut_list, "normal") )
+            {
+                shortcut_list = &table->normal_mode_shortcut_list;
+            }
+            else if( !strcmp(destiny_shortcut_list, "insert") )
+            {
+                shortcut_list = &table->insert_mode_shortcut_list;
+            }
+            else if( !strcmp(destiny_shortcut_list, "edit") )
+            {
+                shortcut_list = &table->edit_mode_shortcut_list;
+            }
+            else if( !strcmp(destiny_shortcut_list, "visual") )
+            {
+                shortcut_list = &table->visual_mode_shortcut_list;
+            }
+            else // fallback (TODO: emit a warning)
+            {
+                shortcut_list = &table->normal_mode_shortcut_list;
+            }
         }
 
-        char *key = trim(key_begin, line + end_pos);
+        char *value_ot_begin =  divider_str+1;
+        char *comma_sep;
 
-        // put(shortcut_dict, key, value);
-        shortcut_list = add_shortcut(shortcut_list, value, key);
+        while( (comma_sep = strchr(value_ot_begin, ',')) )
+        {
+            char * value = trim(value_ot_begin, comma_sep - 1);
+            value_ot_begin = comma_sep + 1;    
+            *shortcut_list = add_shortcut(*shortcut_list, key, value);
+        }
+
+        char *value = trim(value_ot_begin, line + end_pos);
+
+        // put(shortcut_dict, value, key_ot);
+        *shortcut_list = add_shortcut(*shortcut_list, key, value);
     }
 
-    return shortcut_list;   
+    return table;   
 }

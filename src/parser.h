@@ -14,8 +14,15 @@ struct shortcut_list {
     struct shortcut_list* next;
 };
 
+struct shortcut_table {
+    struct shortcut_list* normal_mode_shortcut_list;
+    struct shortcut_list* visual_mode_shortcut_list;
+    struct shortcut_list* edit_mode_shortcut_list;
+    struct shortcut_list* insert_mode_shortcut_list;
+};
+
 struct shortcut* create_shortcut(char *key, char *val);
 
-struct shortcut_list *parse_shortcut_file();
+struct shortcut_table *parse_shortcut_file();
 
 #endif

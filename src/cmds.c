@@ -2570,7 +2570,7 @@ void pad_and_align (char * str_value, char * numeric_value, int col_width, int a
     return;
 }
 
-int has_normal_single_command_shortcut (struct block * buf);
+int has_normal_single_command_shortcut (struct block * buf, int curmode);
 
 /**
  * \brief Check if the buffer content is a valid command
@@ -2591,7 +2591,7 @@ int is_single_command (struct block * buf, long timeout) {
 
     if (curmode == NORMAL_MODE )
     {
-        if( has_normal_single_command_shortcut(buf) )
+        if( has_normal_single_command_shortcut(buf, curmode) )
         {
             return 1;
         }

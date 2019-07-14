@@ -6,13 +6,31 @@
 
 static int initted = 0;
 struct dictionary * short_dict;
-struct shortcut_list* slist;
+struct shortcut_table* table;
 
-int buffer_has_shortcut(struct block* buffer)
+int buffer_has_shortcut(struct block* buffer, int curmode)
 {
-    if( !slist || !slist->shortcut) return 0;
+    struct shortcut_list* shortcut_list = NULL;
+    if( curmode == VISUAL_MODE )
+    {
+        shortcut_list = table->visual_mode_shortcut_list;
+    }
+    else if( curmode == NORMAL_MODE )
+    {
+        shortcut_list = table->normal_mode_shortcut_list;
+    }
+    else if( curmode == EDIT_MODE )
+    {
+        shortcut_list = table->edit_mode_shortcut_list;
+    }
+    else if( curmode == INSERT_MODE )
+    {
+        shortcut_list = table->insert_mode_shortcut_list;
+    }
 
-    struct shortcut_list* temp_list = slist;
+    if( !shortcut_list || !shortcut_list->shortcut) return 0;
+
+    struct shortcut_list* temp_list = shortcut_list;
 
     while(temp_list)
     {
@@ -27,11 +45,29 @@ int buffer_has_shortcut(struct block* buffer)
     return 0;
 }
 
-struct shortcut* buffer_get_shortcut(struct block* buffer)
+struct shortcut* buffer_get_shortcut(struct block* buffer, int curmode)
 {
-    if( !slist || !slist->shortcut) return NULL;
+    struct shortcut_list* shortcut_list = NULL;
+    if( curmode == VISUAL_MODE )
+    {
+        shortcut_list = table->visual_mode_shortcut_list;
+    }
+    else if( curmode == NORMAL_MODE )
+    {
+        shortcut_list = table->normal_mode_shortcut_list;
+    }
+    else if( curmode == EDIT_MODE )
+    {
+        shortcut_list = table->edit_mode_shortcut_list;
+    }
+    else if( curmode == INSERT_MODE )
+    {
+        shortcut_list = table->insert_mode_shortcut_list;
+    }
 
-    struct shortcut_list* temp_list = slist;
+    if( !shortcut_list || !shortcut_list->shortcut) return NULL;
+
+    struct shortcut_list* temp_list = shortcut_list;
 
     while(temp_list)
     {
@@ -51,15 +87,17 @@ void init_shortcuts()
 {
     if( !initted )
     {
-        slist = parse_shortcut_file();
+        table = parse_shortcut_file();
+
+        struct shortcut_list* normal_shortcut_list = table->normal_mode_shortcut_list;
         
-        if(!slist || !slist->shortcut)
+        if(!normal_shortcut_list || !normal_shortcut_list->shortcut)
         {
             fputs("not fund any shortcuts\n", stderr);
         }
         else
         {
-            struct shortcut_list* temp_list = slist;
+            struct shortcut_list* temp_list = normal_shortcut_list;
 
             while(temp_list)
             {
@@ -80,19 +118,4 @@ void init_shortcuts()
         
         initted = 1; 
     }
-}
-
-int get_save_command()
-{
-    return ctl('S');
-}
-
-int get_test_command()
-{
-    return ctl('O');
-}
-
-int get_shift_test_command()
-{
-    return  0;
 }

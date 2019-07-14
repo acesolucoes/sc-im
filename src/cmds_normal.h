@@ -46,6 +46,6 @@
 extern int shall_quit;
 
 void do_normalmode (struct block * buf);
-int has_normal_single_command_shortcut (struct block * buf);
+int has_normal_single_command_shortcut (struct block * buf, int curmode);
 
 extern struct history * commandline_history;
