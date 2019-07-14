@@ -112,6 +112,8 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
             return -1;
         }
 
+        sc_info("%s found", s->key);
+
         if( strcmp(s->key, "line_0") == 0 )
         {
             insert_into_buffer(*temp_buf, "^");
@@ -197,33 +199,71 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
             char redo = ctl('r');
             insert_into_buffer(*temp_buf, &redo);
         }
+        else if( strcmp(s->key, "delete_row") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "dr");
+        }
+        else if( strcmp(s->key, "delete_column") == 0 )
+        {
+            insert_into_buffer(*temp_buf, "dc");
+        }
 
 
         // special commands
         else if( strcmp(s->key, "save") == 0 )
         {
             insert_into_buffer(*temp_buf, ":");
-            special_command = 1;
+            special_command = SAVE;
         }
         else if( strcmp(s->key, "save_quit") == 0 )
         {
             insert_into_buffer(*temp_buf, ":");
-            special_command = 2;
+            special_command = SAVE_QUIT;
         }
         else if( strcmp(s->key, "quit") == 0 )
         {
             insert_into_buffer(*temp_buf, ":");
-            special_command = 3;
+            special_command = QUIT;
         }
         else if( strcmp(s->key, "open") == 0 )
         {
             insert_into_buffer(*temp_buf, ":");
-            special_command = 4;
+            special_command = OPEN;
         }
         else if( strcmp(s->key, "show_help") == 0 )
         {
             insert_into_buffer(*temp_buf, ":");
-            special_command = 5;
+            special_command = HELP;
+        }
+        else if( strcmp(s->key, "copy_clipboard") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = COPY;
+        }
+        else if( strcmp(s->key, "paste_clipboard") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = PASTE;
+        }
+        else if( strcmp(s->key, "export_xlsx") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = EXPORT_XLSX;
+        }
+        else if( strcmp(s->key, "export_csv") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = EXPORT_CSV;
+        }
+        else if( strcmp(s->key, "export_txt") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = EXPORT_TXT;
+        }
+        else if( strcmp(s->key, "export_tab") == 0 )
+        {
+            insert_into_buffer(*temp_buf, ":");
+            special_command = EXPORT_TSV;
         }
 
         return get_bufsize(*temp_buf);

@@ -112,6 +112,11 @@
 #define OPEN 4
 #define HELP 5
 #define COPY 6
+#define PASTE 7
+#define EXPORT_XLSX 8
+#define EXPORT_CSV 9
+#define EXPORT_TSV 10
+#define EXPORT_TXT 11
 
 void ui_sc_msg(char * s, int type, ...);
 #define sc_error(x, ...)     ui_sc_msg(x, ERROR_MSG, ##__VA_ARGS__)

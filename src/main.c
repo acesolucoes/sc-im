@@ -361,8 +361,27 @@ int main (int argc, char ** argv) {
             }
             else if( special_command == COPY)
             {
-                // insert_into_buffer(buffer, "yy");
-                // sc_info("copy command");
+                insert_into_buffer(buffer, "ccopy\n");
+            }
+            else if( special_command == PASTE)
+            {
+                insert_into_buffer(buffer, "cpaste\n");
+            }
+            else if( special_command == EXPORT_XLSX)
+            {
+                insert_into_buffer(buffer, "e! xlsx ");
+            }
+            else if( special_command == EXPORT_CSV)
+            {
+                insert_into_buffer(buffer, "e! csv ");
+            }
+            else if( special_command == EXPORT_TSV)
+            {
+                insert_into_buffer(buffer, "e! tab ");
+            }
+            else if( special_command == EXPORT_TXT)
+            {
+                insert_into_buffer(buffer, "e! txt ");
             }
             
             special_command = NO_CMD;
@@ -692,10 +711,30 @@ void nopipe() {
 
 void sig_tstp() {
     //sc_info("Got SIGTSTP.");
-    def_prog_mode();
-    endwin();
-    signal(SIGTSTP, SIG_DFL);  /* set handler to default */
-    kill(getpid(), SIGTSTP);   /* call the default handler */
+    if ( ! atoi((char *) get_conf_value("debug")))
+    {
+            // sc_error("Got SIGINT. Press «:q<Enter>» to quit SC-IM");
+        if(curmode == NORMAL_MODE || curmode == VISUAL_MODE )
+        {
+            // struct block* temp_buf = create_buf();
+            struct block* temp2_buf = create_buf();
+            addto_buf(temp2_buf, ctl('z'));
+            // // TODO: test
+            // int bs = handle_command(temp2_buf, &temp_buf, curmode);
+            copybuffer(temp2_buf, buffer);
+            
+
+            // erase_buf(temp_buf);
+            erase_buf(temp2_buf);
+        }
+    }
+    else
+    {
+        def_prog_mode();
+        endwin();
+        signal(SIGTSTP, SIG_DFL);  /* set handler to default */
+        kill(getpid(), SIGTSTP);   /* call the default handler */
+    }
 }
 
 
