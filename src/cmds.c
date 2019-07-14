@@ -1108,6 +1108,11 @@ void chg_mode(char strcmd){
         case 'v':
             curmode = VISUAL_MODE;
             break;
+
+        // TODO: to make another function
+        case ctl('a'):
+            curmode = INSERT_MODE;
+            break;
     }
     return;
 }
@@ -2642,6 +2647,7 @@ int is_single_command (struct block * buf, long timeout) {
         else if (buf->value == ctl('d'))    res = EDITION_CMD;
         else if (buf->value == ctl('b'))    res = MOVEMENT_CMD;
         else if (buf->value == ctl('a'))    res = MOVEMENT_CMD;
+        else if (buf->value == ctl('o'))    res = MOVEMENT_CMD;
         else if (buf->value == L'G')        res = MOVEMENT_CMD;
         else if (buf->value == L'H')        res = MOVEMENT_CMD;
         else if (buf->value == L'M')        res = MOVEMENT_CMD;
@@ -2797,13 +2803,10 @@ int is_single_command (struct block * buf, long timeout) {
                ) res = EDITION_CMD;
 
     } else if (curmode == VISUAL_MODE && bs == 1) {
-             if (buf->value == L'j' ||
+             if (
                  buf->value == OKEY_DOWN ||
-                 buf->value == L'k' ||
                  buf->value == OKEY_UP    ||
-                 buf->value == L'h' ||
                  buf->value == OKEY_LEFT ||
-                 buf->value == L'l' ||
                  buf->value == OKEY_RIGHT ||
                  buf->value == L'$' ||
                  buf->value == L'0' ||

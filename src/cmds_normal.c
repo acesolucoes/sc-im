@@ -62,6 +62,7 @@
 #include "undo.h"
 #endif
 
+#include "shortcuts.h"
 
 #include "dep_graph.h"
 extern graphADT graph;
@@ -81,6 +82,8 @@ extern struct history * insert_history;
 extern char ori_insert_edit_submode;
 #endif
 
+#include <sys/ioctl.h>
+
 /**
  * \brief TODO Document do_normalmode()
  *
@@ -93,24 +96,41 @@ void do_normalmode(struct block * buf) {
     int bs = get_bufsize(buf);
     struct ent * e;
 
+    if( buf->value == get_test_command() )
+    {
+        // help();
+        sc_info("test command");
+        return;
+    }
+
     switch (buf->value) {
         // FOR TEST PURPOSES
         case L'A':
-            sc_info("runtime:%d", RUNTIME);
-            //;
-            //wchar_t t = ui_query_opt(
-            //L"Backup file exists. Do you want to (E)dit file and remove backup, (R)ecover backup or (Q)uit: ", L"qer");
-            //sc_info("result: %lc.", t);
+        chg_mode(':');
+#ifdef HISTORY_FILE
+            add(commandline_history, L"");
+#endif
+            ui_handle_cursor();
+            inputline_pos = 0;
+            real_inputline_pos = 0;
+            ui_show_header();
             break;
+            // sc_info("runtime:%d", RUNTIME);
+            // beep();
+            // //;
+            // //wchar_t t = ui_query_opt(
+            // //L"Backup file exists. Do you want to (E)dit file and remove backup, (R)ecover backup or (Q)uit: ", L"qer");
+            // //sc_info("result: %lc.", t);
+            // break;
 
         case L'W':
+        beep();
             break;
 
         case L'Q':
             break;
 
         // MOVEMENT COMMANDS
-        case L'j':
         case OKEY_DOWN:
             lastcol = curcol;
             lastrow = currow;
@@ -119,7 +139,6 @@ void do_normalmode(struct block * buf) {
             ui_update(TRUE);
             break;
 
-        case L'k':
         case OKEY_UP:
             lastcol = curcol;
             lastrow = currow;
@@ -128,7 +147,6 @@ void do_normalmode(struct block * buf) {
             ui_update(TRUE);
             break;
 
-        case L'h':
         case OKEY_LEFT:
             lastrow = currow;
             lastcol = curcol;
@@ -137,7 +155,6 @@ void do_normalmode(struct block * buf) {
             ui_update(TRUE);
             break;
 
-        case L'l':
         case OKEY_RIGHT:
             lastrow = currow;
             lastcol = curcol;
@@ -339,21 +356,21 @@ void do_normalmode(struct block * buf) {
             break;
 
         // GOTO goto
-        case ctl('a'):
-            e = go_home();
-            lastrow = currow;
-            lastcol = curcol;
-            curcol = e->col;
-            currow = e->row;
-            unselect_ranges();
-            extern int center_hidden_rows;
-            extern int center_hidden_cols;
-            center_hidden_rows=0;
-            center_hidden_cols=0;
-            offscr_sc_rows = 0;
-            offscr_sc_cols = 0;
-            ui_update(TRUE);
-            break;
+        // case ctl('a'):
+        //     e = go_home();
+        //     lastrow = currow;
+        //     lastcol = curcol;
+        //     curcol = e->col;
+        //     currow = e->row;
+        //     unselect_ranges();
+        //     extern int center_hidden_rows;
+        //     extern int center_hidden_cols;
+        //     center_hidden_rows=0;
+        //     center_hidden_cols=0;
+        //     offscr_sc_rows = 0;
+        //     offscr_sc_cols = 0;
+        //     ui_update(TRUE);
+        //     break;
 
         case L'g':
             if (buf->pnext->value == L'0') {                               // g0
@@ -466,6 +483,7 @@ void do_normalmode(struct block * buf) {
         case L'\\':
         case L'<':
         case L'>':
+        case ctl('a'):
             if (locked_cell(currow, curcol)) return;
             insert_edit_submode = buf->value;
             chg_mode(insert_edit_submode);

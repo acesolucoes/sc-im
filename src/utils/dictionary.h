@@ -1,3 +1,5 @@
+#ifndef DICT_H
+#define DICT_H
 /*******************************************************************************
  * Copyright (c) 2013-2017, Andrés Martinelli <andmarti@gmail.com              *
  * All rights reserved.                                                        *
@@ -62,3 +64,4 @@ struct nlist * get_nl(struct dictionary * d, char * key);
 void parse_str(struct dictionary * d, char * str, int blank_space);
 int get_maxkey_length(struct dictionary * d);
 int get_maxvalue_length(struct dictionary * d);
+#endif

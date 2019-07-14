@@ -196,6 +196,9 @@ void do_insertmode(struct block * sb) {
             case '\\':
                 strcpy(ope, "label");
                 break;
+            case ctl('a'):
+                strcpy(ope, "rightstring");
+                break;
         }
 
         if (content[0] == L'"') {

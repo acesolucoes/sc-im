@@ -84,6 +84,7 @@
 #include "vmtbl.h"   // for growtbl
 #include "filter.h"
 #include "dep_graph.h"
+#include "shortcuts.h"
 
 #ifdef UNDO
 #include "undo.h"
@@ -284,6 +285,9 @@ int main (int argc, char ** argv) {
 
     // 4. read sc file passed as argv
     load_sc();
+
+    // setup the keyboard shortcuts
+    init_shortcuts();
 
     // change curmode to NORMAL_MODE
     chg_mode('.');

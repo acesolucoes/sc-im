@@ -272,3 +272,9 @@ struct block * dequeue (struct block * buf) {
     }
     return buf;
 }
+
+// TODO:
+int comparebuffer(struct block * origen, struct block * destino)
+{
+    return 0;
+}

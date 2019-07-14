@@ -1,4 +1,5 @@
 *.o
+*.sc
 src/y.tab.h
 src/experres.h
 src/gram.c

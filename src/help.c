@@ -78,13 +78,15 @@ int load_help () {
     int c = 0, count = 0, max_width = COLS;
     char helpfile_path[BUFFERSIZE];
 
+    // TODO: change Make to create help file from doc_pt-BR
+
     // we try to read help file in HELP_PATH
-    sprintf(helpfile_path, "%s/%s_help", HELP_PATH, SNAME);
+    sprintf(helpfile_path, "%s/%s_help_pt-BR", HELP_PATH, SNAME);
     f = fopen(helpfile_path, "r");
 
     // we try to read help file in current dir
     if (! f ) {
-        f = fopen("./doc", "r");
+        f = fopen("./doc_pt-BR", "r");
     }
 
     // last change to read the help file !
@@ -95,7 +97,7 @@ int load_help () {
         char * str_pos = strrchr(cwd, '/');
         if (str_pos == NULL) return -1;
         cwd[str_pos - cwd + 1] = '\0';
-        strcat(cwd, "doc");
+        strcat(cwd, "doc_pt-BR");
         f = fopen(cwd, "r");
     }
 

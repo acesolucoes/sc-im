@@ -1,3 +1,5 @@
+#ifndef BUFFER
+#define BUFFER
 /*******************************************************************************
  * Copyright (c) 2013-2017, Andrés Martinelli <andmarti@gmail.com              *
  * All rights reserved.                                                        *
@@ -62,3 +64,6 @@ int get_pbuflen(struct block * buf);
 int get_bufval(struct block * buf, int d);
 int find_val(struct block * buf, int value);
 struct block * dequeue (struct block * buf);
+
+int comparebuffer(struct block * origen, struct block * destino);
+#endif
