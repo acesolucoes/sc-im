@@ -274,7 +274,31 @@ struct block * dequeue (struct block * buf) {
 }
 
 // TODO:
-int comparebuffer(struct block * origen, struct block * destino)
+int compare_buffer(struct block * origen, struct block * destino)
 {
-    return 0;
+    if( !origen && !destino) return 1;
+
+    if( !origen || !destino) return 0;
+
+    while( origen || destino )
+    {
+        if( !origen || !destino) return 0;
+
+        if( origen->value != destino->value ) return 0;
+
+        origen = origen->pnext;
+        destino = destino->pnext;
+    }
+
+    return 1;
+}
+
+void insert_into_buffer(struct block * origen, char *values)
+{
+
+    while(*values)
+    {
+        addto_buf(origen, *values);
+        values++;
+    }
 }

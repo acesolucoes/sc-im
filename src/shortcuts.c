@@ -6,16 +6,66 @@
 
 static int initted = 0;
 struct dictionary * short_dict;
+struct shortcut_list* slist;
+
+int buffer_has_shortcut(struct block* buffer)
+{
+    if( !slist || !slist->shortcut) return 0;
+
+    struct shortcut_list* temp_list = slist;
+
+    while(temp_list)
+    {
+        if(compare_buffer(buffer, temp_list->shortcut->values))
+        {
+            return 1;
+        }
+
+        temp_list = temp_list->next;
+    }
+
+    return 0;
+}
+
+struct shortcut* buffer_get_shortcut(struct block* buffer)
+{
+    if( !slist || !slist->shortcut) return NULL;
+
+    struct shortcut_list* temp_list = slist;
+
+    while(temp_list)
+    {
+        if(compare_buffer(buffer, temp_list->shortcut->values))
+        {
+            return temp_list->shortcut;
+        }
+
+        temp_list = temp_list->next;
+    }
+
+    return NULL;
+}
+
 
 void init_shortcuts()
 {
     if( !initted )
     {
-        short_dict = parse_shortcut_file();
+        slist = parse_shortcut_file2();
         
-        if(!short_dict || !short_dict->list)
+        if(!slist || !slist->shortcut)
         {
-            fputs(stderr, "not fund any shortcuts");
+            fputs("not fund any shortcuts\n", stderr);
+        }
+        else
+        {
+            struct shortcut_list* temp_list = slist;
+
+            while(temp_list)
+            {
+                puts(temp_list->shortcut->key);
+                temp_list = temp_list->next;
+            }
         }
         // else
         // {
@@ -28,7 +78,7 @@ void init_shortcuts()
         //     }
         // }
         
-        initted = 1;
+        initted = 1; 
     }
 }
 

@@ -160,6 +160,7 @@ pthread_t fthread;
 
 void read_stdin();
 extern char * rev;
+extern int special_command;
 
 /**
  * \brief The main() function
@@ -182,6 +183,7 @@ extern char * rev;
 // are 1? Look for instances of exit_app(<number>).
 
 int main (int argc, char ** argv) {
+
     // Define how the file stream should be buffered. Error if unsuccessful.
     if (setvbuf(stderr, stderr_buffer, _IOFBF, STDERRBUF) != 0) {
         fprintf(stderr, "Error setting stderr buffer\n");
@@ -331,6 +333,32 @@ int main (int argc, char ** argv) {
 
         // autobackup if it is time to do so
         handle_backup();
+
+        if (special_command != 0)
+        {
+            if( special_command == 1)
+            {
+                insert_into_buffer(buffer, "w ");
+            }
+            else if( special_command == 2)
+            {
+                insert_into_buffer(buffer, "wq!");
+            }
+            else if( special_command == 3)
+            {
+                insert_into_buffer(buffer, "q!");
+            }
+            else if( special_command == 4)
+            {
+                insert_into_buffer(buffer, "load ");
+            }
+            else if( special_command == 5)
+            {
+                insert_into_buffer(buffer, "help");
+            }
+            
+            special_command = 0;
+        }
 
         // if we are in ncurses
         if (! atoi((char *) get_conf_value("nocurses"))) {

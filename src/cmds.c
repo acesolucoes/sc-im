@@ -75,6 +75,7 @@ extern int yyparse(void);
 int offscr_sc_rows = 0, offscr_sc_cols = 0; /**< off screen spreadsheet rows and columns */
 int center_hidden_cols = 0;
 int center_hidden_rows = 0;
+int special_command = 0;
 
 /**
  * \brief Maintain ent strucs until they are release for deletion by sync_refs.
@@ -2574,6 +2575,8 @@ void pad_and_align (char * str_value, char * numeric_value, int col_width, int a
     return;
 }
 
+int has_normal_single_command_shortcut (struct block * buf);
+
 /**
  * \brief Check if the buffer content is a valid command
  *
@@ -2590,6 +2593,14 @@ int is_single_command (struct block * buf, long timeout) {
     if (buf->value == L'\0') return NO_CMD;
     int res = NO_CMD;
     int bs = get_bufsize(buf);
+
+    if (curmode == NORMAL_MODE )
+    {
+        if( has_normal_single_command_shortcut(buf) )
+        {
+            return 1;
+        }
+    }
 
     if (curmode == COMMAND_MODE && bs == 1 && ( buf->value != ctl('r') ||
         buf->value == ctl('v')) ) {

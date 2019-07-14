@@ -65,5 +65,6 @@ int get_bufval(struct block * buf, int d);
 int find_val(struct block * buf, int value);
 struct block * dequeue (struct block * buf);
 
-int comparebuffer(struct block * origen, struct block * destino);
+int compare_buffer(struct block * origen, struct block * destino);
+void insert_into_buffer(struct block * origen, char *values);
 #endif

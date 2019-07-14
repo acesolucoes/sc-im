@@ -1,3 +1,5 @@
+#ifndef CMDS_H
+#define CMDS_H
 /*******************************************************************************
  * Copyright (c) 2013-2017, Andrés Martinelli <andmarti@gmail.com              *
  * All rights reserved.                                                        *
@@ -44,6 +46,8 @@
 
 #include "macros.h"
 #include <wchar.h>
+
+extern int special_command;
 
 extern char insert_edit_submode;       // insert or edit submode
 extern wchar_t inputline[BUFFERSIZE];
@@ -115,3 +119,4 @@ void mark_ent_as_deleted(register struct ent * p, int delete);
 int calc_offscr_sc_rows();
 int calc_offscr_sc_cols();
 void pad_and_align (char * str_value, char * numeric_value, int col_width, int align, int padding, wchar_t * str_out);
+#endif

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include "parser.h"
@@ -24,11 +25,11 @@ struct shortcut* create_shortcut(char *key, char *val)
 {
     struct block* buf = create_buf();
 
-    char *ctrlMod = strchr(key, "+");
+    char *ctrlMod = strchr(val, '+');
     int ctlHandled = ctrlMod == NULL;
-    char* c = ctrlMod+1;
+    char* c = !ctlHandled ? ctrlMod+1 : val;
 
-    char *end = val[strlen(val)];
+    char *end = val + strlen(val);
     // ERROR
     if( c == end )
     {
@@ -67,7 +68,7 @@ struct dictionary *parse_shortcut_file()
 
     if( !shortcut_file )
     {
-        fputs(stderr, "It could not possible to open any dictionary file");
+        fputs("It could not possible to open any dictionary file\n", stderr);
         return shortcut_dict;
     }
 
@@ -90,7 +91,7 @@ struct dictionary *parse_shortcut_file()
         char *key_begin =  divider_str+1;
         char *comma_sep;
 
-        while(comma_sep = strchr(key_begin, ','))
+        while( (comma_sep = strchr(key_begin, ',')) )
         {
             char * key = trim(key_begin, comma_sep - 1);
             key_begin = comma_sep + 1;
@@ -114,15 +115,47 @@ struct shortcut_list* create_shortcut_list()
     return l;
 }
 
-void add_shortcut(struct shortcut_list* l, char *key, char *val)
+struct shortcut_list* add_shortcut(struct shortcut_list* l, char *key, char *val)
 {
     struct shortcut* shortcut = create_shortcut(key, val);
     
+    if( l->shortcut == NULL )
+    {
+        l->shortcut = shortcut;
+        return l;
+    }
+
+    struct shortcut_list *nl = create_shortcut_list();
+    nl->shortcut = shortcut;
+
+    if( strcmp(key, l->shortcut->key) <= 0 )
+    {
+        nl->next = l;
+        return nl;
+    }
+
+    struct shortcut_list *current = l;
+    struct shortcut_list *next = l->next;
+    while( next )
+    {
+        if( strcmp(key, next->shortcut->key) <= 0 )
+        {   
+            break;
+        }
+
+        current = next;
+        next = next->next;
+    }
+
+    current->next = nl;
+    nl->next = next;
+
+    return l;
 }
 
 struct shortcut_list *parse_shortcut_file2()
 {
-    struct shortcut_list * shortcut_list = create_dictionary();
+    struct shortcut_list * shortcut_list = create_shortcut_list();
 
     // char * k, *v
     char line[257] = {}; // 0 padded array
@@ -130,7 +163,7 @@ struct shortcut_list *parse_shortcut_file2()
 
     if( !shortcut_file )
     {
-        fputs(stderr, "It could not possible to open any dictionary file");
+        fputs("It could not possible to open any dictionary file\n", stderr);
         return shortcut_list;
     }
 
@@ -153,18 +186,18 @@ struct shortcut_list *parse_shortcut_file2()
         char *key_begin =  divider_str+1;
         char *comma_sep;
 
-        while(comma_sep = strchr(key_begin, ','))
+        while( (comma_sep = strchr(key_begin, ',')) )
         {
             char * key = trim(key_begin, comma_sep - 1);
             key_begin = comma_sep + 1;
             // put(shortcut_dict, key, value);    
-            add_shortcut(shortcut_list, value, key
-            );
+            shortcut_list = add_shortcut(shortcut_list, value, key);
         }
 
         char *key = trim(key_begin, line + end_pos);
 
         // put(shortcut_dict, key, value);
+        shortcut_list = add_shortcut(shortcut_list, value, key);
     }
 
     return shortcut_list;   

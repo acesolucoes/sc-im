@@ -63,6 +63,7 @@
 #endif
 
 #include "shortcuts.h"
+#include "parser.h"
 
 #include "dep_graph.h"
 extern graphADT graph;
@@ -84,6 +85,12 @@ extern char ori_insert_edit_submode;
 
 #include <sys/ioctl.h>
 
+
+int has_normal_single_command_shortcut (struct block * buf)
+{
+    return buffer_has_shortcut(buf);
+}
+
 /**
  * \brief TODO Document do_normalmode()
  *
@@ -96,12 +103,77 @@ void do_normalmode(struct block * buf) {
     int bs = get_bufsize(buf);
     struct ent * e;
 
+    struct shortcut* s = buffer_get_shortcut(buf);
+
+    struct block* temp_buf = create_buf();
+
+    if( s )
+    {
+        sc_info("command %s found", s->key);
+        if( strcmp(s->key, "line_0") == 0 )
+        {
+            insert_into_buffer(temp_buf, "^");
+        }
+        else if( strcmp(s->key, "last_valid_line") == 0 )
+        {
+            insert_into_buffer(temp_buf, "#");
+        }
+        else if( strcmp(s->key, "go_to_command_mode") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+        }
+        else if( strcmp(s->key, "insert_center") == 0 )
+        {
+            insert_into_buffer(temp_buf, "\\");
+        }
+        else if( strcmp(s->key, "insert_left") == 0 )
+        {
+            insert_into_buffer(temp_buf, "<");
+        }
+        else if( strcmp(s->key, "insert_right") == 0 )
+        {
+            insert_into_buffer(temp_buf, ">");
+        }
+        else if( strcmp(s->key, "save") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+            special_command = 1;
+        }
+        else if( strcmp(s->key, "save_quit") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+            special_command = 2;
+        }
+        else if( strcmp(s->key, "quit") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+            special_command = 3;
+        }
+        else if( strcmp(s->key, "save") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+            special_command = 4;
+        }
+        else if( strcmp(s->key, "open") == 0 )
+        {
+            insert_into_buffer(temp_buf, ":");
+            special_command = 5;
+        }
+    }
+    else
+    {
+        sc_info("no command found");
+        copybuffer(buf, temp_buf);
+    }
+
     if( buf->value == get_test_command() )
     {
         // help();
         sc_info("test command");
         return;
     }
+
+    buf = temp_buf;
 
     switch (buf->value) {
         // FOR TEST PURPOSES
@@ -114,6 +186,7 @@ void do_normalmode(struct block * buf) {
             inputline_pos = 0;
             real_inputline_pos = 0;
             ui_show_header();
+            special_command = SAVE;
             break;
             // sc_info("runtime:%d", RUNTIME);
             // beep();
@@ -1179,5 +1252,7 @@ void do_normalmode(struct block * buf) {
                 ui_show_header();
             }
     }
+
+    erase_buf(temp_buf);
     return;
 }

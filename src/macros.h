@@ -105,6 +105,13 @@
 #define DEBUG_MSG         19
 #define VALUE_MSG         20
 
+// special commands
+#define SAVE 1 
+#define SAVE_QUIT 2
+#define QUIT 3
+#define OPEN 4
+#define HELP 5
+
 void ui_sc_msg(char * s, int type, ...);
 #define sc_error(x, ...)     ui_sc_msg(x, ERROR_MSG, ##__VA_ARGS__)
 #define sc_debug(x, ...)     ui_sc_msg(x, DEBUG_MSG, ##__VA_ARGS__)
