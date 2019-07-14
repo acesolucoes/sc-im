@@ -1,10 +1,10 @@
 # Observacoes: 
 # 1) Para se fazer uma sequencia com Control deve-se iniciar a sequencia com "Ctrl+". Outras variações de caixa não são permitidas 
-# 2) alguns comandos especiais pro terminal nao podem ser dados como atalho: Ctrl+C, Ctrl+Z, Ctrl+P
+# 2) alguns comandos especiais pro terminal nao podem ser dados como atalho: Ctrl+Z, Ctrl+P
 # 3) Sequencias com Control devem ser grudadas "Ctrl+a" é válido, "Ctrl + A" não 
 # 4) Sequencias com Control tem a caixa da letra ignorada: "Ctrl+a" é igual a "Ctrl+A"
 # 5) Shift neste momento está desabilitado
-# 6) Quando o atalho e só uma letra, por ex. a, a caixa ´e diferente. o atalho "a" é diferente do "A"
+# 6) Quando o atalho e só uma letra, por ex. a, a caixa é diferente. o atalho "a" é diferente do "A"
 
 # comandos no modo normal
 normal, line_0:             0               # muda para a linha 0 da coluna atual
@@ -20,7 +20,7 @@ normal, paste:              Ctrl+V          # Cola o conteudo da area de transfe
 normal, increase_column_width:  a           # Aumenta o comprimento da coluna
 normal, decrease_column_width:  _           # Diminui o comprimento da coluna
 normal, cut:                    x           # Recorta os conteudos da célula ou faixa de células selecionada
-normal, copy:               Ctrl+C          # Copia o conteudo de uma celula
+normal, copy:               ff          # Copia o conteudo de uma celula
 
 # comandos especiais (modo normal)
 show_help:                  Ctrl+b          # mostra o arquivo de ajuda

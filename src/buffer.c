@@ -273,21 +273,24 @@ struct block * dequeue (struct block * buf) {
     return buf;
 }
 
-// TODO:
 int compare_buffer(struct block * origen, struct block * destino)
 {
     if( !origen && !destino) return 1;
 
     if( !origen || !destino) return 0;
 
+    int partial_result = 0;
     while( origen || destino )
     {
-        if( !origen || !destino) return 0;
+        if( !origen ) return partial_result;
+        if( !destino) return 0;
 
-        if( origen->value != destino->value ) return 0;
+        if( origen->value != destino->value ) return partial_result;
 
         origen = origen->pnext;
         destino = destino->pnext;
+
+        partial_result = -1;
     }
 
     return 1;

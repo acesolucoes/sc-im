@@ -32,17 +32,24 @@ int buffer_has_shortcut(struct block* buffer, int curmode)
 
     struct shortcut_list* temp_list = shortcut_list;
 
+    int res = 0;
+
     while(temp_list)
     {
-        if(compare_buffer(buffer, temp_list->shortcut->values))
+        int tmp_res = compare_buffer(buffer, temp_list->shortcut->values);
+        if(tmp_res == 1)
         {
             return 1;
+        }
+        else if(tmp_res == -1)
+        {
+            res = -1;
         }
 
         temp_list = temp_list->next;
     }
 
-    return 0;
+    return res;
 }
 
 struct shortcut* buffer_get_shortcut(struct block* buffer, int curmode)
@@ -69,17 +76,24 @@ struct shortcut* buffer_get_shortcut(struct block* buffer, int curmode)
 
     struct shortcut_list* temp_list = shortcut_list;
 
+    struct shortcut *shortcut = NULL;
+    
     while(temp_list)
     {
-        if(compare_buffer(buffer, temp_list->shortcut->values))
+        int res = compare_buffer(buffer, temp_list->shortcut->values) ;
+        if( res == 1 )
         {
             return temp_list->shortcut;
+        }
+        else if( res == -1)
+        {
+            shortcut = temp_list->shortcut;
         }
 
         temp_list = temp_list->next;
     }
 
-    return NULL;
+    return shortcut;
 }
 
 

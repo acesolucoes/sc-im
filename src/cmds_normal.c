@@ -105,7 +105,13 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
 
     if( s )
     {
-        sc_info("command %s found", s->key);
+        int x = get_bufsize(buf); 
+        int y = get_bufsize(s->values);
+        if(x != y)
+        {
+            return -1;
+        }
+
         if( strcmp(s->key, "line_0") == 0 )
         {
             insert_into_buffer(*temp_buf, "^");
@@ -200,7 +206,6 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
 void do_normalmode(struct block * buf) {
     struct ent * e;
 
-    
     struct block* temp_buf = create_buf();
 
     int bs = handle_command(buf, &temp_buf, curmode);
@@ -209,6 +214,10 @@ void do_normalmode(struct block * buf) {
     {
         sc_info("no command found");
         copybuffer(buf, temp_buf);
+    }
+    else if( bs == -1)
+    {
+        return; // incomplete
     }
 
     buf = temp_buf;

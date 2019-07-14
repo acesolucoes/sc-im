@@ -2591,7 +2591,7 @@ int is_single_command (struct block * buf, long timeout) {
 
     if (curmode == NORMAL_MODE )
     {
-        if( has_normal_single_command_shortcut(buf, curmode) )
+        if( has_normal_single_command_shortcut(buf, curmode) == 1 )
         {
             return 1;
         }

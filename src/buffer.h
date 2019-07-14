@@ -65,6 +65,8 @@ int get_bufval(struct block * buf, int d);
 int find_val(struct block * buf, int value);
 struct block * dequeue (struct block * buf);
 
+// TODO: change to contain buffer. Verify if destino contains origem
+// if destino === origem, returns 1, else if origen is contained by destino return -1 
 int compare_buffer(struct block * origen, struct block * destino);
 void insert_into_buffer(struct block * origen, char *values);
 #endif
