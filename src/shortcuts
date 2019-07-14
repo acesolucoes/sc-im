@@ -1,14 +1,24 @@
-# comandos no modo normal
-line_0:             a # muda para a linha 0 da coluna atual
-last_valid_line:    b # avança para a última linha válida da coluna atual
-go_to_command_mode: c # muda para o modo comando
-insert_center:      i # insere no centro
-insert_left:        e # insere na esquerda
-insert_right:       d # insere na direita
+# Observacoes: 
+# 1) Para se fazer uma sequencia com Control deve-se iniciar a sequencia com "Ctrl+". Outras variações de caixa não são permitidas 
+# 2) alguns comandos especiais pro terminal nao podem ser dados como atalho: Ctrl+C, Ctrl+Z, Ctrl+P
+# 3) Sequencias com Control devem ser grudadas "Ctrl+a" é válido, "Ctrl + A" não 
+# 4) Sequencias com Control tem a caixa da letra ignorada: "Ctrl+a" é igual a "Ctrl+A"
+# 5) Shift neste momento está desabilitado
+# 6) Quando o atalho e só uma letra, por ex. a, a caixa ´e diferente. o atalho "a" é diferente do "A"
 
-# comandos especiais
-show_help:          Ctrl+b   # mostra o arquivo de ajuda
-save_quit:          Ctrl+W         # Salva a planilha e sai do programa
-quit:               Ctrl+Q         # Sai do programa
-save:               Ctrl+S         # Salva uma planilha
-open:               Ctrl+O         # Abre uma planilha
+# comandos no modo normal
+line_0:             a               # muda para a linha 0 da coluna atual
+last_valid_line:    b               # avança para a última linha válida da coluna atual
+go_to_command_mode: c               # muda para o modo comando
+insert_center:      i               # insere no centro
+insert_left:        e               # insere na esquerda
+insert_right:       d               # insere na direita
+previous_valid_cell:b               # volta para a celula anterior válida
+next_valid_cell:    w               # avança para a proxima celula válida
+paste:              Ctrl+V          # Cola o conteudo da area de transferencia
+
+# comandos especiais (modo normal)
+show_help:          Ctrl+b          # mostra o arquivo de ajuda
+quit:               Ctrl+F          # Sai do programa
+save:               Ctrl+W          # Salva uma planilha
+open:               Ctrl+A          # Abre uma planilha

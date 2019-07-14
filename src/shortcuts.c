@@ -51,7 +51,7 @@ void init_shortcuts()
 {
     if( !initted )
     {
-        slist = parse_shortcut_file2();
+        slist = parse_shortcut_file();
         
         if(!slist || !slist->shortcut)
         {

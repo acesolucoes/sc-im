@@ -5,4 +5,5 @@ src/y.tab.h
 src/experres.h
 src/gram.c
 src/sc-im
+src/sc-im2
 src/statres.h

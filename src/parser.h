@@ -16,8 +16,6 @@ struct shortcut_list {
 
 struct shortcut* create_shortcut(char *key, char *val);
 
-struct dictionary *parse_shortcut_file();
-
-struct shortcut_list *parse_shortcut_file2();
+struct shortcut_list *parse_shortcut_file();
 
 #endif

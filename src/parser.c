@@ -58,54 +58,6 @@ struct shortcut* create_shortcut(char *key, char *val)
     return l; 
 }
 
-struct dictionary *parse_shortcut_file()
-{
-    struct dictionary *shortcut_dict = create_dictionary();
-
-    // char * k, *v
-    char line[257] = {}; // 0 padded array
-    FILE *shortcut_file = fopen("shortcuts", "r");
-
-    if( !shortcut_file )
-    {
-        fputs("It could not possible to open any dictionary file\n", stderr);
-        return shortcut_dict;
-    }
-
-    char * comment_str, * divider_str;
-
-    while( fgets(line, 256, shortcut_file) )
-    {
-        comment_str = strchr(line, '#');
-        if( comment_str == line) continue;
-
-        divider_str = strchr(line, ':');
-
-        if( !divider_str ) continue;
-
-        int end_pos = comment_str ? (comment_str-1) - line : strlen(line) - 1;
-
-        if( divider_str - line >= end_pos || divider_str == line ) continue; // invalid line
-
-        char *value = trim(line, divider_str-1);
-        char *key_begin =  divider_str+1;
-        char *comma_sep;
-
-        while( (comma_sep = strchr(key_begin, ',')) )
-        {
-            char * key = trim(key_begin, comma_sep - 1);
-            key_begin = comma_sep + 1;
-            put(shortcut_dict, key, value);    
-        }
-
-        char *key = trim(key_begin, line + end_pos);
-
-        put(shortcut_dict, key, value);
-    }
-
-    return shortcut_dict;
-}
-
 struct shortcut_list* create_shortcut_list()
 {
     struct shortcut_list* l = (struct shortcut_list*) malloc (sizeof (struct shortcut_list));
@@ -153,7 +105,7 @@ struct shortcut_list* add_shortcut(struct shortcut_list* l, char *key, char *val
     return l;
 }
 
-struct shortcut_list *parse_shortcut_file2()
+struct shortcut_list *parse_shortcut_file()
 {
     struct shortcut_list * shortcut_list = create_shortcut_list();
 
@@ -163,7 +115,18 @@ struct shortcut_list *parse_shortcut_file2()
 
     if( !shortcut_file )
     {
-        fputs("It could not possible to open any dictionary file\n", stderr);
+        fprintf(stderr, "error");
+        char destiny[255] = {};
+        char* homepath = getenv("HOME");
+        strcat(destiny, homepath);
+        strcat(destiny, "/.sc-shortcuts");
+        puts(destiny);
+        
+        shortcut_file = fopen(destiny, "r");
+    }
+
+    if( !shortcut_file )
+    {
         return shortcut_list;
     }
 

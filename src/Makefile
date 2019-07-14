@@ -1,5 +1,5 @@
 # Specify the name of the resulting executable file
-name = sc-im
+name = sc-im2
 
 # The base directory where everything should be installed.
 prefix  = /usr/local
@@ -163,6 +163,8 @@ install :
 	install $(name) $(DESTDIR)$(prefix)/bin/$(name)
 	install -d $(DESTDIR)$(HELPDIR)
 	install doc $(DESTDIR)$(HELPDIR)/$(name)_help
+	install doc_pt-BR $(DESTDIR)$(HELPDIR)/$(name)_help_pt-BR
+	install shortcuts $(HOME)/.sc-shortcuts
 	install plot_* $(DESTDIR)$(HELPDIR)/
 	install -d $(DESTDIR)$(MANDIR)/
 	install -m 644 sc-im.1 $(DESTDIR)$(MANDIR)/$(name).1

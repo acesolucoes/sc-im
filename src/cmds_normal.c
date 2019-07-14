@@ -134,6 +134,21 @@ void do_normalmode(struct block * buf) {
         {
             insert_into_buffer(temp_buf, ">");
         }
+        else if( strcmp(s->key, "previous_valid_cell") == 0 )
+        {
+            insert_into_buffer(temp_buf, "b");
+        }
+        else if( strcmp(s->key, "insert_right") == 0 )
+        {
+            insert_into_buffer(temp_buf, "w");
+        }
+        else if( strcmp(s->key, "paste") == 0 )
+        {
+            insert_into_buffer(temp_buf, "p");
+        }
+
+
+        // special commands
         else if( strcmp(s->key, "save") == 0 )
         {
             insert_into_buffer(temp_buf, ":");
@@ -149,12 +164,12 @@ void do_normalmode(struct block * buf) {
             insert_into_buffer(temp_buf, ":");
             special_command = 3;
         }
-        else if( strcmp(s->key, "save") == 0 )
+        else if( strcmp(s->key, "open") == 0 )
         {
             insert_into_buffer(temp_buf, ":");
             special_command = 4;
         }
-        else if( strcmp(s->key, "open") == 0 )
+        else if( strcmp(s->key, "show_help") == 0 )
         {
             insert_into_buffer(temp_buf, ":");
             special_command = 5;
@@ -429,21 +444,21 @@ void do_normalmode(struct block * buf) {
             break;
 
         // GOTO goto
-        // case ctl('a'):
-        //     e = go_home();
-        //     lastrow = currow;
-        //     lastcol = curcol;
-        //     curcol = e->col;
-        //     currow = e->row;
-        //     unselect_ranges();
-        //     extern int center_hidden_rows;
-        //     extern int center_hidden_cols;
-        //     center_hidden_rows=0;
-        //     center_hidden_cols=0;
-        //     offscr_sc_rows = 0;
-        //     offscr_sc_cols = 0;
-        //     ui_update(TRUE);
-        //     break;
+        case ctl('a'):
+            e = go_home();
+            lastrow = currow;
+            lastcol = curcol;
+            curcol = e->col;
+            currow = e->row;
+            unselect_ranges();
+            extern int center_hidden_rows;
+            extern int center_hidden_cols;
+            center_hidden_rows=0;
+            center_hidden_cols=0;
+            offscr_sc_rows = 0;
+            offscr_sc_cols = 0;
+            ui_update(TRUE);
+            break;
 
         case L'g':
             if (buf->pnext->value == L'0') {                               // g0
@@ -556,18 +571,6 @@ void do_normalmode(struct block * buf) {
         case L'\\':
         case L'<':
         case L'>':
-        case ctl('a'):
-            if (locked_cell(currow, curcol)) return;
-            insert_edit_submode = buf->value;
-            chg_mode(insert_edit_submode);
-#ifdef INS_HISTORY_FILE
-            ori_insert_edit_submode = buf->value;
-            add(insert_history, L"");
-#endif
-            inputline_pos = 0;
-            real_inputline_pos = 0;
-            ui_show_header();
-            break;
 
         // EDITION COMMANDS
         // edit cell (v)

@@ -1109,11 +1109,6 @@ void chg_mode(char strcmd){
         case 'v':
             curmode = VISUAL_MODE;
             break;
-
-        // TODO: to make another function
-        case ctl('a'):
-            curmode = INSERT_MODE;
-            break;
     }
     return;
 }

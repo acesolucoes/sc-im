@@ -338,15 +338,15 @@ int main (int argc, char ** argv) {
         {
             if( special_command == 1)
             {
-                insert_into_buffer(buffer, "w ");
+                insert_into_buffer(buffer, "w! ");
             }
             else if( special_command == 2)
             {
-                insert_into_buffer(buffer, "wq!");
+                insert_into_buffer(buffer, "wq\n");
             }
             else if( special_command == 3)
             {
-                insert_into_buffer(buffer, "q!");
+                insert_into_buffer(buffer, "q!\n");
             }
             else if( special_command == 4)
             {
@@ -354,7 +354,7 @@ int main (int argc, char ** argv) {
             }
             else if( special_command == 5)
             {
-                insert_into_buffer(buffer, "help");
+                insert_into_buffer(buffer, "help\n");
             }
             
             special_command = 0;
