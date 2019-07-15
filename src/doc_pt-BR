@@ -21,8 +21,6 @@ Use ':q<Enter>' to go back to the spreadsheet.
 
 ==============================================================================
 SC-IM has the following modes:
-
-SC-IM has the following modes:
    NORMAL MODE:  In Normal mode, you can navigate cells and input normal
                  commands.
    INSERT MODE:  Use the '=', '<', '>', or '\' to go to Insert mode, where you
@@ -882,7 +880,6 @@ Commands for handling cell content:
     the range into the cell.
 
     The following motion commands move the cursor during selection:
-    j k l h     Move down, up, right or left.
     0           Move to column A.
     $           Move forward to the last valid column of the current row.
     #           Move down to the last valid row of the current column.

@@ -17,7 +17,7 @@ normal, go_to_visual_mode:  VM              # muda para o modo visual
 normal, insert_center:      cc              # insere no centro
 normal, insert_left:        ce              # insere na esquerda
 normal, insert_right:       cd              # insere na direita
-#normal, insert_number:      /              # insere valor/fórmula númerica ('=' já é o padrão)
+#normal, insert_number:      =              # insere valor/fórmula númerica ('=' já é o padrão)
 
 normal, previous_valid_cell:p              # volta para a celula anterior válida
 normal, next_valid_cell:    w               # avança para a proxima celula válida
