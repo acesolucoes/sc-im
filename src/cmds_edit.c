@@ -74,6 +74,22 @@ static wint_t wi; /**< char read from stdin */
  */
 
 void do_editmode(struct block * sb) {
+
+    struct block* temp_buf = create_buf();
+
+    int bs = handle_command(sb, &temp_buf, curmode);
+
+    if( bs == 0)
+    {
+        copybuffer(sb, temp_buf);
+    }
+    else if( bs == -1)
+    {
+        return; // incomplete
+    }
+
+    sb = temp_buf;
+
     if (sb->value == L'h' || sb->value == OKEY_LEFT) {         // LEFT
         if (real_inputline_pos) {
             real_inputline_pos--;

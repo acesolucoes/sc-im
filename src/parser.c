@@ -10,7 +10,7 @@
 char * trim( char *beg, char *end)
 {
     while( isspace(*beg) ) beg++;
-    if( beg - end >= 0 ) return NULL;
+    if( beg - end > 0 ) return NULL;
 
     while(isspace(*end)) end--;
 

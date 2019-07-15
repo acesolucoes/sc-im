@@ -2589,12 +2589,9 @@ int is_single_command (struct block * buf, long timeout) {
     int res = NO_CMD;
     int bs = get_bufsize(buf);
 
-    if (curmode == NORMAL_MODE )
+    if( has_normal_single_command_shortcut(buf, curmode) == 1 )
     {
-        if( has_normal_single_command_shortcut(buf, curmode) == 1 )
-        {
-            return 1;
-        }
+        return 1;
     }
 
     if (curmode == COMMAND_MODE && bs == 1 && ( buf->value != ctl('r') ||

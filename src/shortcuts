@@ -13,10 +13,13 @@ normal, line_0:             0               # muda para a linha 0 da coluna atua
 normal, last_valid_line:    b               # avança para a última linha válida da coluna atual
 normal, go_to_command_mode: dd              # muda para o modo comando
 normal, go_to_visual_mode:  VM              # muda para o modo visual
+
 normal, insert_center:      cc              # insere no centro
 normal, insert_left:        ce              # insere na esquerda
 normal, insert_right:       cd              # insere na direita
-#normal, previous_valid_cell:p              # volta para a celula anterior válida
+#normal, insert_number:      /              # insere valor/fórmula númerica ('=' já é o padrão)
+
+normal, previous_valid_cell:p              # volta para a celula anterior válida
 normal, next_valid_cell:    w               # avança para a proxima celula válida
 normal, paste:              Ctrl+V          # Cola o conteudo da area de transferencia
 normal, increase_column_width:  a1          # Aumenta o comprimento da coluna
@@ -50,3 +53,13 @@ normal, save:               Ctrl+W          # Salva uma planilha
 normal, open:               Ctrl+O          # Abre uma planilha
 normal, paste_clipboard:    VV              # Cola da área de transferencia
 normal, copy_clipboard:     CC              # Copia para a área de transferencia
+
+normal, edit_number:        e               # entra no modo de edição para célula de valor númerico
+normal, edit_text:          E               # entra no modo de edição para texto
+
+# comandos no modo de edição
+edit, begin_line:               b               # move para o início da linha
+edit, end_line:                 $               # move para o fim da linha
+edit, begin_word:               B               # move para o início da palavra atual/palavra anterior
+#edit, delete_end_word:          de              # deleta até o fim da palavra
+#edit, delete_begin_next_word:   dw              # deleta até o início da próxima palavra

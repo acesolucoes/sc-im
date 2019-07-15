@@ -112,170 +112,191 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
             return -1;
         }
 
-        if( strcmp(s->key, "line_0") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "^");
-        }
-        else if( strcmp(s->key, "last_valid_line") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "#");
-        }
-        else if( strcmp(s->key, "go_to_command_mode") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-        }
-        else if( strcmp(s->key, "go_to_visual_mode") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "v");
-        }
-        else if( strcmp(s->key, "insert_center") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "\\");
-        }
-        else if( strcmp(s->key, "insert_left") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "<");
-        }
-        else if( strcmp(s->key, "insert_right") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ">");
-        }
-        else if( strcmp(s->key, "previous_valid_cell") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "b");
-        }
-        else if( strcmp(s->key, "next_valid_cell") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "w");
-        }
-        else if( strcmp(s->key, "paste") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "p");
-        }
-        else if( strcmp(s->key, "increase_column_width") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "f>");
-        }
-        else if( strcmp(s->key, "decrease_column_width") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "f<");
-        }
-        else if( strcmp(s->key, "cut") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "x");
-        }
-        else if( strcmp(s->key, "copy") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "yy");
-        }
-        else if( strcmp(s->key, "insert_row") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "ir");
-        }
-        else if( strcmp(s->key, "insert_column") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "ic");
-        }
-        else if( strcmp(s->key, "open_row") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "or");
-        }
-        else if( strcmp(s->key, "open_column") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "oc");
-        }
-        else if( strcmp(s->key, "adjust_width") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "aa");
-        }
-        else if( strcmp(s->key, "undo") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "u");
-        }
-        else if( strcmp(s->key, "redo") == 0 )
-        {
-            char redo = ctl('r');
-            insert_into_buffer(*temp_buf, &redo);
-        }
-        else if( strcmp(s->key, "delete_row") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "dr");
-        }
-        else if( strcmp(s->key, "delete_column") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "dc");
-        }
-        else if( strcmp(s->key, "yank_cell") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "yy");
-        }
-        else if( strcmp(s->key, "yank_row") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "yr");
-        }
-        else if( strcmp(s->key, "yank_column") == 0 )
-        {
-            insert_into_buffer(*temp_buf, "yc");
-        }
+        sc_info("%s found", s->key);
 
-        
+        if(curmode == NORMAL_MODE)
+        {
+            if( strcmp(s->key, "line_0") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "^");
+            }
+            else if( strcmp(s->key, "last_valid_line") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "#");
+            }
+            else if( strcmp(s->key, "go_to_command_mode") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+            }
+            else if( strcmp(s->key, "go_to_visual_mode") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "v");
+            }
+            else if( strcmp(s->key, "insert_center") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "\\");
+            }
+            else if( strcmp(s->key, "insert_left") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "<");
+            }
+            else if( strcmp(s->key, "insert_right") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ">");
+            }
+            else if( strcmp(s->key, "previous_valid_cell") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "b");
+            }
+            else if( strcmp(s->key, "next_valid_cell") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "w");
+            }
+            else if( strcmp(s->key, "paste") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "p");
+            }
+            else if( strcmp(s->key, "increase_column_width") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "f>");
+            }
+            else if( strcmp(s->key, "decrease_column_width") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "f<");
+            }
+            else if( strcmp(s->key, "cut") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "x");
+            }
+            else if( strcmp(s->key, "copy") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "yy");
+            }
+            else if( strcmp(s->key, "insert_row") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "ir");
+            }
+            else if( strcmp(s->key, "insert_column") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "ic");
+            }
+            else if( strcmp(s->key, "open_row") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "or");
+            }
+            else if( strcmp(s->key, "open_column") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "oc");
+            }
+            else if( strcmp(s->key, "adjust_width") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "aa");
+            }
+            else if( strcmp(s->key, "undo") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "u");
+            }
+            else if( strcmp(s->key, "redo") == 0 )
+            {
+                char redo = ctl('r');
+                insert_into_buffer(*temp_buf, &redo);
+            }
+            else if( strcmp(s->key, "delete_row") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "dr");
+            }
+            else if( strcmp(s->key, "delete_column") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "dc");
+            }
+            else if( strcmp(s->key, "yank_cell") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "yy");
+            }
+            else if( strcmp(s->key, "yank_row") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "yr");
+            }
+            else if( strcmp(s->key, "yank_column") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "yc");
+            }
+            else if( strcmp(s->key, "insert_number") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "=");
+            }
 
-
-        // special commands
-        else if( strcmp(s->key, "save") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = SAVE;
+            // special commands
+            else if( strcmp(s->key, "save") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = SAVE;
+            }
+            else if( strcmp(s->key, "save_quit") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = SAVE_QUIT;
+            }
+            else if( strcmp(s->key, "quit") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = QUIT;
+            }
+            else if( strcmp(s->key, "open") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = OPEN;
+            }
+            else if( strcmp(s->key, "show_help") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = HELP;
+            }
+            else if( strcmp(s->key, "copy_clipboard") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = COPY;
+            }
+            else if( strcmp(s->key, "paste_clipboard") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = PASTE;
+            }
+            else if( strcmp(s->key, "export_xlsx") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = EXPORT_XLSX;
+            }
+            else if( strcmp(s->key, "export_csv") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = EXPORT_CSV;
+            }
+            else if( strcmp(s->key, "export_txt") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = EXPORT_TXT;
+            }
+            else if( strcmp(s->key, "export_tab") == 0 )
+            {
+                insert_into_buffer(*temp_buf, ":");
+                special_command = EXPORT_TSV;
+            }
         }
-        else if( strcmp(s->key, "save_quit") == 0 )
+        else if(curmode == EDIT_MODE)
         {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = SAVE_QUIT;
-        }
-        else if( strcmp(s->key, "quit") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = QUIT;
-        }
-        else if( strcmp(s->key, "open") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = OPEN;
-        }
-        else if( strcmp(s->key, "show_help") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = HELP;
-        }
-        else if( strcmp(s->key, "copy_clipboard") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = COPY;
-        }
-        else if( strcmp(s->key, "paste_clipboard") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = PASTE;
-        }
-        else if( strcmp(s->key, "export_xlsx") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = EXPORT_XLSX;
-        }
-        else if( strcmp(s->key, "export_csv") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = EXPORT_CSV;
-        }
-        else if( strcmp(s->key, "export_txt") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = EXPORT_TXT;
-        }
-        else if( strcmp(s->key, "export_tab") == 0 )
-        {
-            insert_into_buffer(*temp_buf, ":");
-            special_command = EXPORT_TSV;
+            if( strcmp(s->key, "begin_line") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "0");
+            }
+            else if( strcmp(s->key, "end_line") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "$");
+            }
+            else if( strcmp(s->key, "begin_word") == 0 )
+            {
+                insert_into_buffer(*temp_buf, "b");
+            }
         }
 
         return get_bufsize(*temp_buf);
