@@ -713,19 +713,15 @@ void sig_tstp() {
     //sc_info("Got SIGTSTP.");
     if ( ! atoi((char *) get_conf_value("debug")))
     {
-            // sc_error("Got SIGINT. Press «:q<Enter>» to quit SC-IM");
         if(curmode == NORMAL_MODE || curmode == VISUAL_MODE )
         {
-            // struct block* temp_buf = create_buf();
-            struct block* temp2_buf = create_buf();
-            addto_buf(temp2_buf, ctl('z'));
-            // // TODO: test
-            // int bs = handle_command(temp2_buf, &temp_buf, curmode);
-            copybuffer(temp2_buf, buffer);
+            struct block* temp_buf = create_buf();
+            addto_buf(temp_buf, ctl('z'));
+            copybuffer(temp_buf, buffer);
             
 
             // erase_buf(temp_buf);
-            erase_buf(temp2_buf);
+            erase_buf(temp_buf);
         }
     }
     else
@@ -765,16 +761,11 @@ void sig_int() {
             // sc_error("Got SIGINT. Press «:q<Enter>» to quit SC-IM");
         if(curmode == NORMAL_MODE || curmode == VISUAL_MODE )
         {
-            // struct block* temp_buf = create_buf();
-            struct block* temp2_buf = create_buf();
-            addto_buf(temp2_buf, ctl('c'));
-            // // TODO: test
-            // int bs = handle_command(temp2_buf, &temp_buf, curmode);
-            copybuffer(temp2_buf, buffer);
-            
+            struct block* temp_buf = create_buf();
+            addto_buf(temp_buf, ctl('c'));
+            copybuffer(temp_buf, buffer);
 
-            // erase_buf(temp_buf);
-            erase_buf(temp2_buf);
+            erase_buf(temp_buf);
         }
     }
     else

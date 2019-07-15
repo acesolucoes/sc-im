@@ -49,6 +49,3 @@ normal, save:               Ctrl+W          # Salva uma planilha
 normal, open:               Ctrl+O          # Abre uma planilha
 normal, paste_clipboard:    VV              # Cola da área de transferencia
 normal, copy_clipboard:     CC              # Copia para a área de transferencia
-
-# comandos no modo de edição
-#edit, paste_clipboard:     VV              # Cola da área de transferencia

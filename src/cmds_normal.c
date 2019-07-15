@@ -112,8 +112,6 @@ int handle_command (struct block * buf, struct block ** temp_buf, int curmode)
             return -1;
         }
 
-        sc_info("%s found", s->key);
-
         if( strcmp(s->key, "line_0") == 0 )
         {
             insert_into_buffer(*temp_buf, "^");
